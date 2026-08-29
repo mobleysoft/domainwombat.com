@@ -1,0 +1,1109 @@
+[
+  {
+    "name": "abstergo.cc",
+    "tier": 1,
+    "division": "defense",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://abstergo-cc-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "accountdrac.com",
+    "tier": 4,
+    "division": "finance",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://accountdrac-com-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "agentropi.com",
+    "tier": 4,
+    "division": "agents",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://agentropi-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "agentzaar.com",
+    "tier": 4,
+    "division": "agents",
+    "product_count": 4,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://agentzaar-com-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "agewinder.com",
+    "tier": 4,
+    "division": "health",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://agewinder-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "aicossic.com",
+    "tier": 4,
+    "division": "ai",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://aicossic-com-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "aiopencommerce.com",
+    "tier": 4,
+    "division": "science",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://aiopencommerce-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "alhena.cc",
+    "tier": 4,
+    "division": "media",
+    "product_count": 3,
+    "code_files": 1,
+    "has_real_code": true,
+    "worker_url": "https://alhena-cc-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "americanagi.cc",
+    "tier": 4,
+    "division": "ai",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://americanagi-cc-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "americnagi.cc",
+    "tier": 4,
+    "division": "ai",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://americnagi-cc-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "anattar.com",
+    "tier": 4,
+    "division": "science",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://anattar-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "animetrope.com",
+    "tier": 4,
+    "division": "media",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://animetrope-com-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "areshiva.com",
+    "tier": 4,
+    "division": "defense",
+    "product_count": 5,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://areshiva-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "audiovizai.com",
+    "tier": 4,
+    "division": "media",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://audiovizai-com-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "authfor.com",
+    "tier": 2,
+    "division": "developer-tools",
+    "product_count": 6,
+    "code_files": 5,
+    "has_real_code": true,
+    "worker_url": "https://authfor-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "bignice.cc",
+    "tier": 4,
+    "division": "education",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://bignice-cc-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "bitdoggo.com",
+    "tier": 4,
+    "division": "finance",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://bitdoggo-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "bloomagi.cc",
+    "tier": 4,
+    "division": "ai",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://bloomagi-cc-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "bondwright.com",
+    "tier": 4,
+    "division": "finance",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://bondwright-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "book2film.cc",
+    "tier": 4,
+    "division": "media",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://book2film-cc-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "bookclubs.cc",
+    "tier": 4,
+    "division": "media",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://bookclubs-cc-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "bookeepr.cc",
+    "tier": 4,
+    "division": "finance",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://bookeepr-cc-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "brocade.cc",
+    "tier": 4,
+    "division": "developer-tools",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://brocade-cc-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "brynhildai.com",
+    "tier": 4,
+    "division": "education",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://brynhildai-com-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "conseiv.com",
+    "tier": 4,
+    "division": "science",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://conseiv-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "consenta.cc",
+    "tier": 4,
+    "division": "agents",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://consenta-cc-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "cryptosmart.cc",
+    "tier": 4,
+    "division": "finance",
+    "product_count": 5,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://cryptosmart-cc-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "danzoa.com",
+    "tier": 4,
+    "division": "media",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://danzoa-com-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "devducky.com",
+    "tier": 4,
+    "division": "developer-tools",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://devducky-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "devtoolai.com",
+    "tier": 4,
+    "division": "developer-tools",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://devtoolai-com-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "devtoolbx.com",
+    "tier": 4,
+    "division": "developer-tools",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://devtoolbx-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "dofura.com",
+    "tier": 4,
+    "division": "business",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://dofura-com-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "domainwombat.com",
+    "tier": 4,
+    "division": "business",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://domainwombat-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "draknir.com",
+    "tier": 4,
+    "division": "defense",
+    "product_count": 5,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://draknir-com-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "draugr.cc",
+    "tier": 4,
+    "division": "defense",
+    "product_count": 5,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://draugr-cc-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "ecofixai.com",
+    "tier": 4,
+    "division": "science",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://ecofixai-com-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "emissionhub.cc",
+    "tier": 4,
+    "division": "science",
+    "product_count": 6,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://emissionhub-cc-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "enablinghomes.com",
+    "tier": 4,
+    "division": "science",
+    "product_count": 3,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://enablinghomes-com-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "encoverai.com",
+    "tier": 4,
+    "division": "finance",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://encoverai-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "entoolize.com",
+    "tier": 4,
+    "division": "agents",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://entoolize-com-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "equifiant.com",
+    "tier": 4,
+    "division": "finance",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://equifiant-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "extraterran.com",
+    "tier": 4,
+    "division": "developer-tools",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://extraterran-com-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "fedbank.cc",
+    "tier": 4,
+    "division": "finance",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://fedbank-cc-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "fedtalent.cc",
+    "tier": 4,
+    "division": "media",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://fedtalent-cc-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "femptocom.com",
+    "tier": 4,
+    "division": "science",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://femptocom-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "filmline.cc",
+    "tier": 2,
+    "division": "media",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://filmline-cc-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "firmcreate.com",
+    "tier": 4,
+    "division": "business",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://firmcreate-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "fundyai.com",
+    "tier": 4,
+    "division": "finance",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://fundyai-com-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "fystz.com",
+    "tier": 4,
+    "division": "developer-tools",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://fystz-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "galadul.com",
+    "tier": 4,
+    "division": "science",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://galadul-com-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "gamegob.com",
+    "tier": 4,
+    "division": "media",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://gamegob-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "glcx.cc",
+    "tier": 4,
+    "division": "business",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://glcx-cc-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "glyphyai.com",
+    "tier": 4,
+    "division": "media",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://glyphyai-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "golfcad.cc",
+    "tier": 4,
+    "division": "golf",
+    "product_count": 2,
+    "code_files": 2,
+    "has_real_code": true,
+    "worker_url": "https://golfcad-cc-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "golfdad.cc",
+    "tier": 4,
+    "division": "golf",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://golfdad-cc-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "golflink.cc",
+    "tier": 4,
+    "division": "golf",
+    "product_count": 2,
+    "code_files": 2,
+    "has_real_code": true,
+    "worker_url": "https://golflink-cc-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "golfmind.cc",
+    "tier": 4,
+    "division": "golf",
+    "product_count": 2,
+    "code_files": 2,
+    "has_real_code": true,
+    "worker_url": "https://golfmind-cc-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "gravnova.com",
+    "tier": 2,
+    "division": "developer-tools",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://gravnova-com-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "greenhandcapital.com",
+    "tier": 4,
+    "division": "finance",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://greenhandcapital-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "greybeardai.com",
+    "tier": 4,
+    "division": "ai",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://greybeardai-com-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "gurukle.com",
+    "tier": 4,
+    "division": "education",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://gurukle-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "halside.com",
+    "tier": 4,
+    "division": "developer-tools",
+    "product_count": 2,
+    "code_files": 1,
+    "has_real_code": true,
+    "worker_url": "https://halside-com-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "healspell.com",
+    "tier": 4,
+    "division": "health",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://healspell-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "helmcorp.cc",
+    "tier": 2,
+    "division": "business",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://helmcorp-cc-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "helmdir.com",
+    "tier": 4,
+    "division": "developer-tools",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://helmdir-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "helmscorp.cc",
+    "tier": 4,
+    "division": "corporate",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://helmscorp-cc-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "hildrai.com",
+    "tier": 4,
+    "division": "business",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://hildrai-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "industrize.com",
+    "tier": 4,
+    "division": "business",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://industrize-com-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "instantiability.com",
+    "tier": 4,
+    "division": "science",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://instantiability-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "intfer.cc",
+    "tier": 4,
+    "division": "ai",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://intfer-cc-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "kubaki.cc",
+    "tier": 4,
+    "division": "media",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://kubaki-cc-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "lawyik.com",
+    "tier": 4,
+    "division": "business",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://lawyik-com-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "leadersclub.cc",
+    "tier": 4,
+    "division": "education",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://leadersclub-cc-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "legibleweights.com",
+    "tier": 1,
+    "division": "ai",
+    "product_count": 4,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://legibleweights-com-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "legionicai.com",
+    "tier": 4,
+    "division": "ai",
+    "product_count": 2,
+    "code_files": 1,
+    "has_real_code": true,
+    "worker_url": "https://legionicai-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "literacraft.com",
+    "tier": 4,
+    "division": "media",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://literacraft-com-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "lovemaint.com",
+    "tier": 4,
+    "division": "health",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://lovemaint-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "mailguyai.com",
+    "tier": 4,
+    "division": "agents",
+    "product_count": 2,
+    "code_files": 1,
+    "has_real_code": true,
+    "worker_url": "https://mailguyai-com-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "malathor.com",
+    "tier": 4,
+    "division": "defense",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://malathor-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "marketingium.com",
+    "tier": 3,
+    "division": "agents",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://marketingium-com-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "meeva.io",
+    "tier": 4,
+    "division": "health",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://meeva-io-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "mobcoin.cc",
+    "tier": 4,
+    "division": "finance",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://mobcoin-cc-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "mobcorp.cc",
+    "tier": 4,
+    "division": "corporate",
+    "product_count": 3,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://mobcorp-cc-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "mobleybooks.com",
+    "tier": 4,
+    "division": "media",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://mobleybooks-com-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "mobleyhelms.com",
+    "tier": 4,
+    "division": "political",
+    "product_count": 0,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://mobleyhelms-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "mobleymetal.com",
+    "tier": 4,
+    "division": "corporate",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://mobleymetal-com-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "mobleyreport.com",
+    "tier": 3,
+    "division": "media",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://mobleyreport-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "mobleysoft.com",
+    "tier": 1,
+    "division": "corporate",
+    "product_count": 17,
+    "code_files": 755,
+    "has_real_code": true,
+    "worker_url": "https://mobleysoft-com-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "newgameplus.cc",
+    "tier": 4,
+    "division": "health",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://newgameplus-cc-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "ownschool.cc",
+    "tier": 4,
+    "division": "education",
+    "product_count": 3,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://ownschool-cc-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "paintedwhore.cc",
+    "tier": 4,
+    "division": "media",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://paintedwhore-cc-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "pandorachat.cc",
+    "tier": 4,
+    "division": "media",
+    "product_count": 3,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://pandorachat-cc-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "patentkin.com",
+    "tier": 4,
+    "division": "business",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://patentkin-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "powerhost.cc",
+    "tier": 4,
+    "division": "developer-tools",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://powerhost-cc-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "quanticfork.com",
+    "tier": 4,
+    "division": "finance",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://quanticfork-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "reasontodate.com",
+    "tier": 4,
+    "division": "education",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://reasontodate-com-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "recovai.com",
+    "tier": 4,
+    "division": "health",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://recovai-com-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "roncorp.cc",
+    "tier": 4,
+    "division": "corporate",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://roncorp-cc-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "ronhelms.cc",
+    "tier": 4,
+    "division": "corporate",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://ronhelms-cc-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "salesfactorai.com",
+    "tier": 4,
+    "division": "agents",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://salesfactorai-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "sanctuaryui.com",
+    "tier": 4,
+    "division": "health",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://sanctuaryui-com-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "scalarflux.com",
+    "tier": 4,
+    "division": "ai",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://scalarflux-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "selfcoin.cc",
+    "tier": 4,
+    "division": "finance",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://selfcoin-cc-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "sentiantai.com",
+    "tier": 4,
+    "division": "ai",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://sentiantai-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "singularityui.com",
+    "tier": 4,
+    "division": "ai",
+    "product_count": 3,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://singularityui-com-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "syncropy.com",
+    "tier": 4,
+    "division": "developer-tools",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://syncropy-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "talkingmind.cc",
+    "tier": 3,
+    "division": "health",
+    "product_count": 4,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://talkingmind-cc-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "taskgridai.com",
+    "tier": 4,
+    "division": "agents",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://taskgridai-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "tenancyai.com",
+    "tier": 4,
+    "division": "science",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://tenancyai-com-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "traceformer.com",
+    "tier": 4,
+    "division": "business",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://traceformer-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "transcendantai.com",
+    "tier": 4,
+    "division": "ai",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://transcendantai-com-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "valdring.com",
+    "tier": 4,
+    "division": "defense",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://valdring-com-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "valkrai.com",
+    "tier": 4,
+    "division": "defense",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://valkrai-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "vendyai.com",
+    "tier": 4,
+    "division": "finance",
+    "product_count": 2,
+    "code_files": 1,
+    "has_real_code": true,
+    "worker_url": "https://vendyai-com-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "ventraleye.com",
+    "tier": 4,
+    "division": "defense",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://ventraleye-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "warpdrive.cc",
+    "tier": 4,
+    "division": "developer-tools",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://warpdrive-cc-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "watchforce.cc",
+    "tier": 4,
+    "division": "defense",
+    "product_count": 4,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://watchforce-cc-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "weylandai.com",
+    "tier": 1,
+    "division": "business",
+    "product_count": 16,
+    "code_files": 3,
+    "has_real_code": true,
+    "worker_url": "https://weylandai-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "workshrinker.com",
+    "tier": 4,
+    "division": "health",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://workshrinker-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "youthmend.com",
+    "tier": 4,
+    "division": "health",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": "https://youthmend-com-worker.jmobleyworks.workers.dev"
+  },
+  {
+    "name": "yutaniai.com",
+    "tier": 4,
+    "division": "science",
+    "product_count": 2,
+    "code_files": 1,
+    "has_real_code": true,
+    "worker_url": "https://yutaniai-com-worker.johnmobley99.workers.dev"
+  },
+  {
+    "name": "rebrief.me",
+    "tier": 4,
+    "division": "platform",
+    "product_count": 2,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": null
+  },
+  {
+    "name": "twill.finance",
+    "tier": 3,
+    "division": "fintech",
+    "product_count": 3,
+    "code_files": 0,
+    "has_real_code": false,
+    "worker_url": null
+  }
+]
