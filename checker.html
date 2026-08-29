@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DOMAINWOMBAT.COM | Sniping-Resistant Domain Checker</title>
+<style>
+  :root {
+    --bg-dark: #050505;
+    --accent: #00ffcc;
+    --glass-bg: rgba(20, 20, 20, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --text-primary: #f0f0f0;
+    --text-muted: #888;
+    --warn: #ffb347;
+    --danger: #ff5c5c;
+  }
+  body {
+    margin: 0; padding: 40px 24px;
+    background-color: var(--bg-dark);
+    background-image: radial-gradient(circle at 50% 0%, #151515 0%, #000 70%);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    min-height: 100vh;
+    max-width: 720px; margin-left: auto; margin-right: auto;
+  }
+  h1 { font-weight: 600; margin-bottom: 4px; }
+  .subtitle { color: var(--text-muted); margin-bottom: 8px; font-size: 14px; line-height: 1.5; }
+  .why {
+    background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 12px;
+    padding: 14px 18px; font-size: 13px; color: var(--text-muted); margin: 20px 0 28px; line-height: 1.6;
+  }
+  .why b { color: var(--text-primary); }
+  .search-row { display: flex; gap: 10px; margin-bottom: 24px; }
+  input#domainInput {
+    flex: 1; background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--text-primary);
+    padding: 12px 16px; border-radius: 10px; font-size: 15px;
+  }
+  button {
+    background: var(--accent); color: #000; border: none; border-radius: 10px;
+    padding: 12px 22px; font-size: 15px; font-weight: 600; cursor: pointer;
+  }
+  button:disabled { opacity: 0.5; cursor: not-allowed; }
+  .result {
+    background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 12px;
+    padding: 20px; margin-bottom: 12px; display: none;
+  }
+  .result .domain { font-size: 18px; font-weight: 600; margin-bottom: 6px; }
+  .badge { display: inline-block; padding: 4px 12px; border-radius: 8px; font-size: 13px; font-weight: 700; }
+  .badge-available { background: rgba(0,255,204,0.15); color: var(--accent); }
+  .badge-taken { background: rgba(255,92,92,0.15); color: var(--danger); }
+  .badge-unknown { background: rgba(255,179,71,0.15); color: var(--warn); }
+  .detail { color: var(--text-muted); font-size: 13px; margin-top: 8px; }
+  .footnote { margin-top: 30px; font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+  <h1>Domain Availability Checker</h1>
+  <div class="subtitle">Checks the authoritative registry directly. No registrar search box in the loop.</div>
+
+  <div class="why">
+    <b>Why this exists:</b> registrar search boxes (GoDaddy and others) have a documented
+    history of "domain front-running" — searching for a name signals interest, and the
+    domain gets registered before you can check out. This tool queries the domain
+    registry's own RDAP server (the modern, standardized replacement for WHOIS) directly,
+    the same source of truth any registrar would use, without going through a commercial
+    search interface built to capture interest signals. It reduces exposure to the
+    well-documented search-box-sniping pattern — it isn't an absolute guarantee against
+    every possible bad actor, and only works for TLDs whose registry has deployed RDAP.
+  </div>
+
+  <div class="search-row">
+    <input type="text" id="domainInput" placeholder="e.g. mynewventure.com" autocomplete="off">
+    <button id="checkBtn">Check</button>
+  </div>
+
+  <div class="result" id="result"></div>
+
+  <div class="footnote">
+    Coverage note: RDAP is deployed by most registries but not all. As of this build,
+    <code>.com</code>, <code>.cc</code>, and <code>.finance</code> are supported directly;
+    <code>.io</code> and <code>.me</code> are not yet in the IANA RDAP bootstrap registry
+    and will report "not available" rather than a guess. Full TLD map:
+    <a href="rdap_tld_map.json">rdap_tld_map.json</a> (source:
+    <a href="https://data.iana.org/rdap/dns.json">IANA RDAP bootstrap</a>).
+  </div>
+
+  <script>
+    let tldMap = {};
+
+    fetch('rdap_tld_map.json').then(r => r.json()).then(d => { tldMap = d; });
+
+    function setResult(html) {
+      const el = document.getElementById('result');
+      el.style.display = 'block';
+      el.innerHTML = html;
+    }
+
+    async function checkDomain() {
+      const raw = document.getElementById('domainInput').value.trim().toLowerCase();
+      if (!raw || !raw.includes('.')) {
+        setResult('<div class="detail">Enter a full domain, e.g. mynewventure.com</div>');
+        return;
+      }
+      const tld = raw.split('.').pop();
+      const rdapBase = tldMap[tld];
+
+      if (!rdapBase) {
+        setResult(`
+          <div class="domain">${raw}</div>
+          <span class="badge badge-unknown">RDAP NOT AVAILABLE</span>
+          <div class="detail">The .${tld} registry hasn't deployed RDAP (or isn't in the IANA bootstrap yet).
+          Can't check this one without falling back to a registrar search, which defeats the purpose of this tool.</div>
+        `);
+        return;
+      }
+
+      document.getElementById('checkBtn').disabled = true;
+      setResult(`<div class="domain">${raw}</div><div class="detail">Querying ${rdapBase} directly...</div>`);
+
+      try {
+        const resp = await fetch(`${rdapBase}/domain/${raw}`);
+        if (resp.status === 404) {
+          setResult(`
+            <div class="domain">${raw}</div>
+            <span class="badge badge-available">LIKELY AVAILABLE</span>
+            <div class="detail">Registry returned no matching record. Verify at your registrar of choice
+            immediately if you intend to buy it — availability can change between check and purchase.</div>
+          `);
+        } else if (resp.ok) {
+          const data = await resp.json();
+          const events = data.events || [];
+          const registered = events.find(e => e.eventAction === 'registration');
+          setResult(`
+            <div class="domain">${raw}</div>
+            <span class="badge badge-taken">TAKEN</span>
+            <div class="detail">Registered${registered ? ' ' + registered.eventDate : ''}.
+            Handle: ${data.handle || 'n/a'}</div>
+          `);
+        } else {
+          setResult(`
+            <div class="domain">${raw}</div>
+            <span class="badge badge-unknown">UNKNOWN (HTTP ${resp.status})</span>
+            <div class="detail">Registry responded unexpectedly. Not confident enough to report a status.</div>
+          `);
+        }
+      } catch (e) {
+        setResult(`
+          <div class="domain">${raw}</div>
+          <span class="badge badge-unknown">CHECK FAILED</span>
+          <div class="detail">${e.message}. This registry's RDAP server may not allow direct browser
+          queries (CORS), or may be down.</div>
+        `);
+      }
+      document.getElementById('checkBtn').disabled = false;
+    }
+
+    document.getElementById('checkBtn').addEventListener('click', checkDomain);
+    document.getElementById('domainInput').addEventListener('keydown', e => {
+      if (e.key === 'Enter') checkDomain();
+    });
+  </script>
+</body>
+</html>
