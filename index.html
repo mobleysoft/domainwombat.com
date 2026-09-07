@@ -1,221 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DOMAINWOMBAT.COM | Sovereign Operations</title>
-    <style>
-        :root {
-            --bg-dark: #050505;
-            --accent-glow: rgba(0, 255, 204, 0.15);
-            --glass-bg: rgba(20, 20, 20, 0.4);
-            --glass-border: rgba(255, 255, 255, 0.05);
-            --text-primary: #f0f0f0;
-            --text-muted: #888;
-        }
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: var(--bg-dark);
-            color: var(--text-primary);
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            overflow: hidden;
-            background-image: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #000 100%);
-        }
-        /* WebGL Container Layer */
-        #canvas-container {
-            position: absolute;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: 0;
-        }
-        /* Somatic UI Layer (Glassmorphism) */
-        .glass-panel {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80%;
-            max-width: 800px;
-            padding: 40px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1);
-            z-index: 10;
-            animation: emerge 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            opacity: 0;
-        }
-        @keyframes emerge {
-            0% { opacity: 0; transform: translate(-50%, -45%) scale(0.95); filter: blur(10px); }
-            100% { opacity: 1; transform: translate(-50%, -50%) scale(1); filter: blur(0); }
-        }
-        h1 {
-            font-size: 3rem;
-            letter-spacing: -0.05em;
-            margin: 0 0 10px 0;
-            background: linear-gradient(180deg, #fff 0%, #aaa 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .metrics {
-            display: flex;
-            gap: 20px;
-            margin-top: 30px;
-        }
-        .metric-card {
-            flex: 1;
-            padding: 20px;
-            background: rgba(0,0,0,0.4);
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.03);
-            transition: all 0.3s ease;
-        }
-        .metric-card:hover {
-            background: rgba(255,255,255,0.03);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px var(--accent-glow);
-        }
-        .metric-value { font-size: 2rem; font-weight: 600; color: #00ffcc; }
-        .metric-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-top: 5px; }
-        
-        /* Micro-interactions */
-        .status-dot {
-            display: inline-block; width: 8px; height: 8px;
-            background: #00ffcc; border-radius: 50%;
-            margin-right: 10px;
-            box-shadow: 0 0 10px #00ffcc;
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0% { opacity: 0.5; box-shadow: 0 0 5px #00ffcc; }
-            50% { opacity: 1; box-shadow: 0 0 15px #00ffcc, 0 0 30px #00ffcc; }
-            100% { opacity: 0.5; box-shadow: 0 0 5px #00ffcc; }
-        }
-    </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
-    <!-- MASCOM_ANALYTICS_CORTEX -->
-    <script>
-        (function() {
-            try {
-                const payload = {
-                    node: "domainwombat.com",
-                    timestamp: new Date().toISOString(),
-                    vector: window.location.pathname,
-                    agent: navigator.userAgent
-                };
-                navigator.sendBeacon("http://127.0.0.1:8889/track", JSON.stringify(payload));
-            } catch(e) {}
-        })();
-    </script>
-    
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Sniping-resistant domain availability checker (real-time RDAP lookups) with a direct handoff to registration - no registrar search-box front-running.">
+<title>DOMAINWOMBAT.COM | Domain Availability Checker</title>
+<style>
+  :root {
+    --bg-dark: #050505;
+    --accent: #00ffcc;
+    --glass-bg: rgba(20, 20, 20, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --text-primary: #f0f0f0;
+    --text-muted: #888;
+    --warn: #ffb347;
+    --danger: #ff5c5c;
+  }
+  body {
+    margin: 0; padding: 40px 24px;
+    background-color: var(--bg-dark);
+    background-image: radial-gradient(circle at 50% 0%, #151515 0%, #000 70%);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    min-height: 100vh;
+    max-width: 720px; margin-left: auto; margin-right: auto;
+  }
+  nav { display: flex; justify-content: flex-end; margin-bottom: 12px; }
+  nav a { color: var(--text-muted); text-decoration: none; font-size: 13px; border: 1px solid var(--glass-border); padding: 6px 12px; border-radius: 8px; }
+  nav a:hover { color: var(--accent); border-color: var(--accent); }
+  h1 { font-weight: 600; margin-bottom: 4px; }
+  .subtitle { color: var(--text-muted); margin-bottom: 8px; font-size: 14px; line-height: 1.5; }
+  .why {
+    background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 12px;
+    padding: 14px 18px; font-size: 13px; color: var(--text-muted); margin: 20px 0 28px; line-height: 1.6;
+  }
+  .why b { color: var(--text-primary); }
+  .search-row { display: flex; gap: 10px; margin-bottom: 24px; }
+  input#domainInput {
+    flex: 1; background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--text-primary);
+    padding: 12px 16px; border-radius: 10px; font-size: 15px;
+  }
+  button {
+    background: var(--accent); color: #000; border: none; border-radius: 10px;
+    padding: 12px 22px; font-size: 15px; font-weight: 600; cursor: pointer;
+  }
+  button:disabled { opacity: 0.5; cursor: not-allowed; }
+  .result {
+    background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 12px;
+    padding: 20px; margin-bottom: 12px; display: none;
+  }
+  .result .domain { font-size: 18px; font-weight: 600; margin-bottom: 6px; }
+  .badge { display: inline-block; padding: 4px 12px; border-radius: 8px; font-size: 13px; font-weight: 700; }
+  .badge-available { background: rgba(0,255,204,0.15); color: var(--accent); }
+  .badge-taken { background: rgba(255,92,92,0.15); color: var(--danger); }
+  .register-btn { display: inline-block; margin-top: 16px; padding: 12px 20px; background: var(--accent);
+    color: #050505; font-weight: 700; text-decoration: none; border-radius: 4px; }
+  .register-btn:hover { opacity: 0.85; }
+  .badge-unknown { background: rgba(255,179,71,0.15); color: var(--warn); }
+  .detail { color: var(--text-muted); font-size: 13px; margin-top: 8px; }
+  .footnote { margin-top: 30px; font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+  a { color: var(--accent); }
+</style>
 </head>
 <body>
-    <div id="canvas-container"></div>
-    
-    <div class="glass-panel">
-        <div style="display: flex; align-items: center; margin-bottom: 20px;">
-            <div class="status-dot"></div>
-            <span style="color: var(--text-muted); font-size: 0.9rem; letter-spacing: 0.1em; text-transform: uppercase;">SOVEREIGN NODE ACTIVE</span>
-        </div>
-        <h1>DOMAINWOMBAT.COM</h1>
-        <p style="color: var(--text-muted); font-size: 1.1rem; line-height: 1.6; max-width: 600px;">
-            Premium, enigmatic, hyper-modern. Physical environment protocol: quantum_field.
-        </p>
-        
-        <div class="metrics">
-            <div class="metric-card">
-                <div class="metric-value">99.9%</div>
-                <div class="metric-label">Neural Coherence</div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-value">0ms</div>
-                <div class="metric-label">API Latency</div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-value">LOCAL</div>
-                <div class="metric-label">Execution Vector</div>
-            </div>
-        </div>
-    </div>
+  <nav><a href="dashboard.html">Portfolio Dashboard &rarr;</a></nav>
+  <h1>Domain Availability Checker</h1>
+  <div class="subtitle">Checks the authoritative registry directly. No registrar search box in the loop.</div>
 
-    <script>
-        // Evolved WebGL Matrix
-        const container = document.getElementById('canvas-container');
-        const scene = new THREE.Scene();
-        scene.fog = new THREE.FogExp2(0x050505, 0.002);
-        
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(window.devicePixelRatio);
-        container.appendChild(renderer.domElement);
-        
-        // Complex geometry generation instead of naked cubes
-        const geometry = new THREE.IcosahedronGeometry(10, 1);
-        const material = new THREE.MeshBasicMaterial({ 
-            color: 0x00ffcc, 
-            wireframe: true,
-            transparent: true,
-            opacity: 0.15
-        });
-        
-        const mesh = new THREE.Mesh(geometry, material);
-        scene.add(mesh);
-        
-        // Particles
-        const particlesGeometry = new THREE.BufferGeometry();
-        const particlesCount = 2000;
-        const posArray = new Float32Array(particlesCount * 3);
-        for(let i=0; i<particlesCount * 3; i++) {
-            posArray[i] = (Math.random() - 0.5) * 100;
-        }
-        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-        const particlesMaterial = new THREE.PointsMaterial({
-            size: 0.05,
-            color: 0x00ffcc,
-            transparent: true,
-            opacity: 0.5
-        });
-        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-        scene.add(particlesMesh);
-        
-        camera.position.z = 25;
-        
-        // Interactive Mouse Tracking
-        let mouseX = 0;
-        let mouseY = 0;
-        document.addEventListener('mousemove', (event) => {
-            mouseX = event.clientX / window.innerWidth - 0.5;
-            mouseY = event.clientY / window.innerHeight - 0.5;
-        });
-        
-        function animate() {
-            requestAnimationFrame(animate);
-            mesh.rotation.x += 0.001;
-            mesh.rotation.y += 0.002;
-            
-            particlesMesh.rotation.y = -mouseX * 0.5;
-            particlesMesh.rotation.x = -mouseY * 0.5;
-            
-            renderer.render(scene, camera);
-        }
-        animate();
-        
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-    </script>
+  <div class="why">
+    <b>Why this exists:</b> registrar search boxes (GoDaddy and others) have a documented
+    history of "domain front-running" — searching for a name signals interest, and the
+    domain gets registered before you can check out. This tool queries the domain
+    registry's own RDAP server (the modern, standardized replacement for WHOIS) directly,
+    the same source of truth any registrar would use, without going through a commercial
+    search interface built to capture interest signals. It reduces exposure to the
+    well-documented search-box-sniping pattern — it isn't an absolute guarantee against
+    every possible bad actor, and only works for TLDs whose registry has deployed RDAP.
+  </div>
 
-    <!-- MASCOM_INTERLINK -->
-    <div style="position: absolute; bottom: 20px; right: 40px; z-index: 100; font-family: monospace; font-size: 0.7rem; letter-spacing: 0.1em; display: flex; gap: 20px;">
-        <a href="blog.html" style="color: #00ffcc; text-decoration: none; text-shadow: 0 0 5px rgba(0,255,204,0.3); transition: color 0.2s;">INTELLIGENCE CORTEX</a>
-        
-        <a href="http://localhost:8888" style="color: #888; text-decoration: none; transition: color 0.2s;">SOVEREIGN GATEWAY</a>
-    </div>
-    
+  <div class="search-row">
+    <input type="text" id="domainInput" placeholder="e.g. mynewventure.com" autocomplete="off">
+    <button id="checkBtn">Check</button>
+  </div>
+
+  <div class="result" id="result"></div>
+
+  <div class="footnote">
+    Coverage note: RDAP is deployed by most registries but not all. As of this build,
+    <code>.com</code>, <code>.cc</code>, and <code>.finance</code> are supported directly;
+    <code>.io</code> and <code>.me</code> are not yet in the IANA RDAP bootstrap registry
+    and will report "not available" rather than a guess. Full TLD map:
+    <a href="rdap_tld_map.json">rdap_tld_map.json</a> (source:
+    <a href="https://data.iana.org/rdap/dns.json">IANA RDAP bootstrap</a>).
+  </div>
+
+  <script>
+    let tldMap = {};
+
+    fetch('rdap_tld_map.json').then(r => r.json()).then(d => { tldMap = d; });
+
+    function setResult(html) {
+      const el = document.getElementById('result');
+      el.style.display = 'block';
+      el.innerHTML = html;
+    }
+
+    async function checkDomain() {
+      const raw = document.getElementById('domainInput').value.trim().toLowerCase();
+      if (!raw || !raw.includes('.')) {
+        setResult('<div class="detail">Enter a full domain, e.g. mynewventure.com</div>');
+        return;
+      }
+      const tld = raw.split('.').pop();
+      const rdapBase = tldMap[tld];
+
+      if (!rdapBase) {
+        setResult(`
+          <div class="domain">${raw}</div>
+          <span class="badge badge-unknown">RDAP NOT AVAILABLE</span>
+          <div class="detail">The .${tld} registry hasn't deployed RDAP (or isn't in the IANA bootstrap yet).
+          Can't check this one without falling back to a registrar search, which defeats the purpose of this tool.</div>
+        `);
+        return;
+      }
+
+      document.getElementById('checkBtn').disabled = true;
+      setResult(`<div class="domain">${raw}</div><div class="detail">Querying ${rdapBase} directly...</div>`);
+
+      try {
+        const resp = await fetch(`${rdapBase}/domain/${raw}`);
+        if (resp.status === 404) {
+          setResult(`
+            <div class="domain">${raw}</div>
+            <span class="badge badge-available">LIKELY AVAILABLE</span>
+            <div class="detail">Registry returned no matching record. Availability can change between
+            check and purchase, so registration below goes to Dynadot's own real checkout for a final
+            authoritative check and price, not an instant purchase from here.</div>
+            <a class="register-btn" target="_blank" rel="noopener"
+               href="https://www.dynadot.com/domain/search?domain=${encodeURIComponent(raw)}">
+               Register ${raw} at Dynadot &rarr;</a>
+          `);
+        } else if (resp.ok) {
+          const data = await resp.json();
+          const events = data.events || [];
+          const registered = events.find(e => e.eventAction === 'registration');
+          setResult(`
+            <div class="domain">${raw}</div>
+            <span class="badge badge-taken">TAKEN</span>
+            <div class="detail">Registered${registered ? ' ' + registered.eventDate : ''}.
+            Handle: ${data.handle || 'n/a'}</div>
+          `);
+        } else {
+          setResult(`
+            <div class="domain">${raw}</div>
+            <span class="badge badge-unknown">UNKNOWN (HTTP ${resp.status})</span>
+            <div class="detail">Registry responded unexpectedly. Not confident enough to report a status.</div>
+          `);
+        }
+      } catch (e) {
+        setResult(`
+          <div class="domain">${raw}</div>
+          <span class="badge badge-unknown">CHECK FAILED</span>
+          <div class="detail">${e.message}. This registry's RDAP server may not allow direct browser
+          queries (CORS), or may be down.</div>
+        `);
+      }
+      document.getElementById('checkBtn').disabled = false;
+    }
+
+    document.getElementById('checkBtn').addEventListener('click', checkDomain);
+    document.getElementById('domainInput').addEventListener('keydown', e => {
+      if (e.key === 'Enter') checkDomain();
+    });
+  </script>
 </body>
 </html>

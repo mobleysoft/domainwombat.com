@@ -49,6 +49,9 @@
   .badge { display: inline-block; padding: 4px 12px; border-radius: 8px; font-size: 13px; font-weight: 700; }
   .badge-available { background: rgba(0,255,204,0.15); color: var(--accent); }
   .badge-taken { background: rgba(255,92,92,0.15); color: var(--danger); }
+  .register-btn { display: inline-block; margin-top: 16px; padding: 12px 20px; background: var(--accent);
+    color: #050505; font-weight: 700; text-decoration: none; border-radius: 4px; }
+  .register-btn:hover { opacity: 0.85; }
   .badge-unknown { background: rgba(255,179,71,0.15); color: var(--warn); }
   .detail { color: var(--text-muted); font-size: 13px; margin-top: 8px; }
   .footnote { margin-top: 30px; font-size: 12px; color: var(--text-muted); line-height: 1.6; }
@@ -125,8 +128,12 @@
           setResult(`
             <div class="domain">${raw}</div>
             <span class="badge badge-available">LIKELY AVAILABLE</span>
-            <div class="detail">Registry returned no matching record. Verify at your registrar of choice
-            immediately if you intend to buy it — availability can change between check and purchase.</div>
+            <div class="detail">Registry returned no matching record. Availability can change between
+            check and purchase, so registration below goes to Dynadot's own real checkout for a final
+            authoritative check and price, not an instant purchase from here.</div>
+            <a class="register-btn" target="_blank" rel="noopener"
+               href="https://www.dynadot.com/domain/search?domain=${encodeURIComponent(raw)}">
+               Register ${raw} at Dynadot &rarr;</a>
           `);
         } else if (resp.ok) {
           const data = await resp.json();
