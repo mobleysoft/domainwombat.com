@@ -56,6 +56,15 @@
   .detail { color: var(--text-muted); font-size: 13px; margin-top: 8px; }
   .footnote { margin-top: 30px; font-size: 12px; color: var(--text-muted); line-height: 1.6; }
   a { color: var(--accent); }
+  #bulkResults { margin-bottom: 12px; }
+  .bulk-row {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 10px;
+    padding: 10px 16px; margin-bottom: 6px; font-size: 14px;
+  }
+  .bulk-row .bulk-domain { flex: 1; font-weight: 600; }
+  .bulk-row .register-btn { padding: 6px 12px; font-size: 13px; margin-top: 0; }
+  #bulkBtn { background: transparent; color: var(--accent); border: 1px solid var(--glass-border); }
 </style>
 </head>
 <body>
@@ -76,9 +85,11 @@
   <div class="search-row">
     <input type="text" id="domainInput" placeholder="e.g. mynewventure.com" autocomplete="off">
     <button id="checkBtn">Check</button>
+    <button id="bulkBtn" title="Check this name across popular TLDs">Check all TLDs</button>
   </div>
 
   <div class="result" id="result"></div>
+  <div id="bulkResults"></div>
 
   <div class="footnote">
     Coverage note: RDAP is deployed by most registries but not all. As of this build,
@@ -87,6 +98,10 @@
     and will report "not available" rather than a guess. Full TLD map:
     <a href="rdap_tld_map.json">rdap_tld_map.json</a> (source:
     <a href="https://data.iana.org/rdap/dns.json">IANA RDAP bootstrap</a>).
+    "Check all TLDs" runs the same real per-registry query against a shortlist of
+    12 common commercial TLDs (com/net/org/cc/dev/app/ai/biz/info/xyz/finance/tech) -
+    not the full 1200-TLD map, since most of those registries either aren't
+    relevant to a new venture name or block direct browser RDAP queries entirely.
   </div>
 
   <script>
@@ -167,6 +182,82 @@
     document.getElementById('domainInput').addEventListener('keydown', e => {
       if (e.key === 'Enter') checkDomain();
     });
+
+    // Bulk multi-TLD check: real value-add beyond single-domain lookup -
+    // take a base name and check it across a curated shortlist of common
+    // commercial TLDs that are both in the real IANA RDAP bootstrap map
+    // AND known (live-verified 2026-09-11) to respond to direct browser
+    // RDAP queries. Not all 1200 TLDs in rdap_tld_map.json are included -
+    // most either aren't relevant for a new venture name or don't allow
+    // direct browser RDAP queries (CORS), which would just flood this
+    // list with "CHECK FAILED" noise instead of real answers. Any TLD not
+    // on this shortlist can still be checked individually above.
+    const BULK_TLDS = ['com', 'net', 'org', 'cc', 'dev', 'app', 'ai', 'biz', 'info', 'xyz', 'finance', 'tech'];
+
+    function baseNameFromInput(raw) {
+      // Accept either a bare name ("mynewventure") or a full domain
+      // ("mynewventure.com") - strip a trailing known TLD from the latter
+      // so "Check all TLDs" checks the name, not just that one TLD again.
+      const parts = raw.split('.');
+      if (parts.length > 1 && tldMap[parts[parts.length - 1]]) {
+        return parts.slice(0, -1).join('.');
+      }
+      return raw;
+    }
+
+    async function checkOneBulkTld(name, tld) {
+      const rdapBase = tldMap[tld];
+      const domain = `${name}.${tld}`;
+      try {
+        const resp = await fetch(`${rdapBase}/domain/${domain}`);
+        if (resp.status === 404) {
+          return { domain, status: 'available' };
+        } else if (resp.ok) {
+          return { domain, status: 'taken' };
+        }
+        return { domain, status: 'unknown', detail: `HTTP ${resp.status}` };
+      } catch (e) {
+        return { domain, status: 'unknown', detail: e.message };
+      }
+    }
+
+    function bulkRowInnerHtml(r) {
+      let badge, extra = '';
+      if (r.status === 'available') {
+        badge = '<span class="badge badge-available">AVAILABLE</span>';
+        extra = `<a class="register-btn" target="_blank" rel="noopener"
+          href="https://www.dynadot.com/domain/search?domain=${encodeURIComponent(r.domain)}">Register &rarr;</a>`;
+      } else if (r.status === 'taken') {
+        badge = '<span class="badge badge-taken">TAKEN</span>';
+      } else {
+        badge = '<span class="badge badge-unknown">UNKNOWN</span>';
+      }
+      return `<span class="bulk-domain">${r.domain}</span>${badge}${extra}`;
+    }
+
+    async function checkAllTlds() {
+      const raw = document.getElementById('domainInput').value.trim().toLowerCase();
+      if (!raw) {
+        setResult('<div class="detail">Enter a name first, e.g. mynewventure</div>');
+        return;
+      }
+      const name = baseNameFromInput(raw);
+      const bulkEl = document.getElementById('bulkResults');
+      document.getElementById('bulkBtn').disabled = true;
+      bulkEl.innerHTML = BULK_TLDS.map(tld =>
+        `<div class="bulk-row" id="bulk-${tld}"><span class="bulk-domain">${name}.${tld}</span><span class="detail">checking...</span></div>`
+      ).join('');
+
+      await Promise.all(BULK_TLDS.map(async tld => {
+        const r = await checkOneBulkTld(name, tld);
+        const el = document.getElementById(`bulk-${tld}`);
+        if (el) el.innerHTML = bulkRowInnerHtml(r);
+      }));
+
+      document.getElementById('bulkBtn').disabled = false;
+    }
+
+    document.getElementById('bulkBtn').addEventListener('click', checkAllTlds);
   </script>
 </body>
 </html>
