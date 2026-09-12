@@ -65,9 +65,13 @@
   .bulk-row .bulk-domain { flex: 1; font-weight: 600; }
   .bulk-row .register-btn { padding: 6px 12px; font-size: 13px; margin-top: 0; }
   #bulkBtn { background: transparent; color: var(--accent); border: 1px solid var(--glass-border); }
+  nav { display: flex; justify-content: flex-end; gap: 8px; margin-bottom: 12px; }
+  nav a { color: var(--text-muted); text-decoration: none; font-size: 13px; border: 1px solid var(--glass-border); padding: 6px 12px; border-radius: 8px; }
+  nav a:hover { color: var(--accent); border-color: var(--accent); }
 </style>
 </head>
 <body>
+  <nav><a href="index.html">Home</a><a href="dashboard.html">Portfolio Dashboard &rarr;</a></nav>
   <h1>Domain Availability Checker</h1>
   <div class="subtitle">Checks the authoritative registry directly. No registrar search box in the loop.</div>
 
