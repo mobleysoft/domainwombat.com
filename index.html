@@ -114,6 +114,30 @@
 
     fetch('rdap_tld_map.json').then(r => r.json()).then(d => { tldMap = d; });
 
+    // Real registration handoff, not a purchase from this page - final
+    // authoritative availability + price is checked at Dynadot's own
+    // checkout. No revenue capture on this link today (DYNADOT_AFFILIATE_ID
+    // is null): confirmed 2026-09-14 that Dynadot runs a real affiliate
+    // program (an in-house "Ambassador" program, 30% commission on
+    // registrations/transfers, or a CJ Affiliate option at 25%), but
+    // enrolling means agreeing to a third party's program terms and
+    // supplying payout details - a real business decision for John to make,
+    // not something an unattended pass should do on his behalf. Once he
+    // enrolls and has a real referral ID, set it here and every register
+    // link on this page picks it up with no other changes needed.
+    const DYNADOT_AFFILIATE_ID = null;
+
+    function dynadotRegisterUrl(domain) {
+      const url = new URL('https://www.dynadot.com/domain/search');
+      url.searchParams.set('domain', domain);
+      // Placeholder param name only - Dynadot's real referral-link format
+      // (a tracking query param vs. a distinct link structure) needs to be
+      // read from their actual Ambassador/CJ dashboard once John enrolls,
+      // not guessed here.
+      if (DYNADOT_AFFILIATE_ID) url.searchParams.set('ref', DYNADOT_AFFILIATE_ID);
+      return url.toString();
+    }
+
     function setResult(html) {
       const el = document.getElementById('result');
       el.style.display = 'block';
@@ -152,7 +176,7 @@
             check and purchase, so registration below goes to Dynadot's own real checkout for a final
             authoritative check and price, not an instant purchase from here.</div>
             <a class="register-btn" target="_blank" rel="noopener"
-               href="https://www.dynadot.com/domain/search?domain=${encodeURIComponent(raw)}">
+               href="${dynadotRegisterUrl(raw)}">
                Register ${raw} at Dynadot &rarr;</a>
           `);
         } else if (resp.ok) {
@@ -241,7 +265,7 @@
       if (r.status === 'available') {
         badge = '<span class="badge badge-available">AVAILABLE</span>';
         extra = `<a class="register-btn" target="_blank" rel="noopener"
-          href="https://www.dynadot.com/domain/search?domain=${encodeURIComponent(r.domain)}">Register &rarr;</a>`;
+          href="${dynadotRegisterUrl(r.domain)}">Register &rarr;</a>`;
       } else if (r.status === 'taken') {
         badge = '<span class="badge badge-taken">TAKEN</span>';
       } else {

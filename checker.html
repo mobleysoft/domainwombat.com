@@ -3,265 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DOMAINWOMBAT.COM | Sniping-Resistant Domain Checker</title>
+<meta http-equiv="refresh" content="0; url=index.html">
+<link rel="canonical" href="https://domainwombat.com/index.html">
+<title>DOMAINWOMBAT.COM | Domain Availability Checker</title>
 <style>
-  :root {
-    --bg-dark: #050505;
-    --accent: #00ffcc;
-    --glass-bg: rgba(20, 20, 20, 0.6);
-    --glass-border: rgba(255, 255, 255, 0.08);
-    --text-primary: #f0f0f0;
-    --text-muted: #888;
-    --warn: #ffb347;
-    --danger: #ff5c5c;
-  }
   body {
-    margin: 0; padding: 40px 24px;
-    background-color: var(--bg-dark);
-    background-image: radial-gradient(circle at 50% 0%, #151515 0%, #000 70%);
-    color: var(--text-primary);
+    margin: 0; padding: 40px 24px; background-color: #050505; color: #f0f0f0;
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    min-height: 100vh;
-    max-width: 720px; margin-left: auto; margin-right: auto;
   }
-  h1 { font-weight: 600; margin-bottom: 4px; }
-  .subtitle { color: var(--text-muted); margin-bottom: 8px; font-size: 14px; line-height: 1.5; }
-  .why {
-    background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 12px;
-    padding: 14px 18px; font-size: 13px; color: var(--text-muted); margin: 20px 0 28px; line-height: 1.6;
-  }
-  .why b { color: var(--text-primary); }
-  .search-row { display: flex; gap: 10px; margin-bottom: 24px; }
-  input#domainInput {
-    flex: 1; background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--text-primary);
-    padding: 12px 16px; border-radius: 10px; font-size: 15px;
-  }
-  button {
-    background: var(--accent); color: #000; border: none; border-radius: 10px;
-    padding: 12px 22px; font-size: 15px; font-weight: 600; cursor: pointer;
-  }
-  button:disabled { opacity: 0.5; cursor: not-allowed; }
-  .result {
-    background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 12px;
-    padding: 20px; margin-bottom: 12px; display: none;
-  }
-  .result .domain { font-size: 18px; font-weight: 600; margin-bottom: 6px; }
-  .badge { display: inline-block; padding: 4px 12px; border-radius: 8px; font-size: 13px; font-weight: 700; }
-  .badge-available { background: rgba(0,255,204,0.15); color: var(--accent); }
-  .badge-taken { background: rgba(255,92,92,0.15); color: var(--danger); }
-  .register-btn { display: inline-block; margin-top: 16px; padding: 12px 20px; background: var(--accent);
-    color: #050505; font-weight: 700; text-decoration: none; border-radius: 4px; }
-  .register-btn:hover { opacity: 0.85; }
-  .badge-unknown { background: rgba(255,179,71,0.15); color: var(--warn); }
-  .detail { color: var(--text-muted); font-size: 13px; margin-top: 8px; }
-  .footnote { margin-top: 30px; font-size: 12px; color: var(--text-muted); line-height: 1.6; }
-  a { color: var(--accent); }
-  #bulkResults { margin-bottom: 12px; }
-  .bulk-row {
-    display: flex; align-items: center; gap: 12px;
-    background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 10px;
-    padding: 10px 16px; margin-bottom: 6px; font-size: 14px;
-  }
-  .bulk-row .bulk-domain { flex: 1; font-weight: 600; }
-  .bulk-row .register-btn { padding: 6px 12px; font-size: 13px; margin-top: 0; }
-  #bulkBtn { background: transparent; color: var(--accent); border: 1px solid var(--glass-border); }
-  nav { display: flex; justify-content: flex-end; gap: 8px; margin-bottom: 12px; }
-  nav a { color: var(--text-muted); text-decoration: none; font-size: 13px; border: 1px solid var(--glass-border); padding: 6px 12px; border-radius: 8px; }
-  nav a:hover { color: var(--accent); border-color: var(--accent); }
+  a { color: #00ffcc; }
 </style>
 </head>
 <body>
-  <nav><a href="index.html">Home</a><a href="dashboard.html">Portfolio Dashboard &rarr;</a></nav>
-  <h1>Domain Availability Checker</h1>
-  <div class="subtitle">Checks the authoritative registry directly. No registrar search box in the loop.</div>
-
-  <div class="why">
-    <b>Why this exists:</b> registrar search boxes (GoDaddy and others) have a documented
-    history of "domain front-running" — searching for a name signals interest, and the
-    domain gets registered before you can check out. This tool queries the domain
-    registry's own RDAP server (the modern, standardized replacement for WHOIS) directly,
-    the same source of truth any registrar would use, without going through a commercial
-    search interface built to capture interest signals. It reduces exposure to the
-    well-documented search-box-sniping pattern — it isn't an absolute guarantee against
-    every possible bad actor, and only works for TLDs whose registry has deployed RDAP.
-  </div>
-
-  <div class="search-row">
-    <input type="text" id="domainInput" placeholder="e.g. mynewventure.com" autocomplete="off">
-    <button id="checkBtn">Check</button>
-    <button id="bulkBtn" title="Check this name across popular TLDs">Check all TLDs</button>
-  </div>
-
-  <div class="result" id="result"></div>
-  <div id="bulkResults"></div>
-
-  <div class="footnote">
-    Coverage note: RDAP is deployed by most registries but not all. As of this build,
-    <code>.com</code>, <code>.cc</code>, and <code>.finance</code> are supported directly;
-    <code>.io</code> and <code>.me</code> are not yet in the IANA RDAP bootstrap registry
-    and will report "not available" rather than a guess. Full TLD map:
-    <a href="rdap_tld_map.json">rdap_tld_map.json</a> (source:
-    <a href="https://data.iana.org/rdap/dns.json">IANA RDAP bootstrap</a>).
-    "Check all TLDs" runs the same real per-registry query against a shortlist of
-    12 common commercial TLDs (com/net/org/cc/dev/app/ai/biz/info/xyz/finance/tech) -
-    not the full 1200-TLD map, since most of those registries either aren't
-    relevant to a new venture name or block direct browser RDAP queries entirely.
-  </div>
-
-  <script>
-    let tldMap = {};
-
-    fetch('rdap_tld_map.json').then(r => r.json()).then(d => { tldMap = d; });
-
-    function setResult(html) {
-      const el = document.getElementById('result');
-      el.style.display = 'block';
-      el.innerHTML = html;
-    }
-
-    async function checkDomain() {
-      const raw = document.getElementById('domainInput').value.trim().toLowerCase();
-      if (!raw || !raw.includes('.')) {
-        setResult('<div class="detail">Enter a full domain, e.g. mynewventure.com</div>');
-        return;
-      }
-      const tld = raw.split('.').pop();
-      const rdapBase = tldMap[tld];
-
-      if (!rdapBase) {
-        setResult(`
-          <div class="domain">${raw}</div>
-          <span class="badge badge-unknown">RDAP NOT AVAILABLE</span>
-          <div class="detail">The .${tld} registry hasn't deployed RDAP (or isn't in the IANA bootstrap yet).
-          Can't check this one without falling back to a registrar search, which defeats the purpose of this tool.</div>
-        `);
-        return;
-      }
-
-      document.getElementById('checkBtn').disabled = true;
-      setResult(`<div class="domain">${raw}</div><div class="detail">Querying ${rdapBase} directly...</div>`);
-
-      try {
-        const resp = await fetch(`${rdapBase}/domain/${raw}`);
-        if (resp.status === 404) {
-          setResult(`
-            <div class="domain">${raw}</div>
-            <span class="badge badge-available">LIKELY AVAILABLE</span>
-            <div class="detail">Registry returned no matching record. Availability can change between
-            check and purchase, so registration below goes to Dynadot's own real checkout for a final
-            authoritative check and price, not an instant purchase from here.</div>
-            <a class="register-btn" target="_blank" rel="noopener"
-               href="https://www.dynadot.com/domain/search?domain=${encodeURIComponent(raw)}">
-               Register ${raw} at Dynadot &rarr;</a>
-          `);
-        } else if (resp.ok) {
-          const data = await resp.json();
-          const events = data.events || [];
-          const registered = events.find(e => e.eventAction === 'registration');
-          setResult(`
-            <div class="domain">${raw}</div>
-            <span class="badge badge-taken">TAKEN</span>
-            <div class="detail">Registered${registered ? ' ' + registered.eventDate : ''}.
-            Handle: ${data.handle || 'n/a'}</div>
-          `);
-        } else {
-          setResult(`
-            <div class="domain">${raw}</div>
-            <span class="badge badge-unknown">UNKNOWN (HTTP ${resp.status})</span>
-            <div class="detail">Registry responded unexpectedly. Not confident enough to report a status.</div>
-          `);
-        }
-      } catch (e) {
-        setResult(`
-          <div class="domain">${raw}</div>
-          <span class="badge badge-unknown">CHECK FAILED</span>
-          <div class="detail">${e.message}. This registry's RDAP server may not allow direct browser
-          queries (CORS), or may be down.</div>
-        `);
-      }
-      document.getElementById('checkBtn').disabled = false;
-    }
-
-    document.getElementById('checkBtn').addEventListener('click', checkDomain);
-    document.getElementById('domainInput').addEventListener('keydown', e => {
-      if (e.key === 'Enter') checkDomain();
-    });
-
-    // Bulk multi-TLD check: real value-add beyond single-domain lookup -
-    // take a base name and check it across a curated shortlist of common
-    // commercial TLDs that are both in the real IANA RDAP bootstrap map
-    // AND known (live-verified 2026-09-11) to respond to direct browser
-    // RDAP queries. Not all 1200 TLDs in rdap_tld_map.json are included -
-    // most either aren't relevant for a new venture name or don't allow
-    // direct browser RDAP queries (CORS), which would just flood this
-    // list with "CHECK FAILED" noise instead of real answers. Any TLD not
-    // on this shortlist can still be checked individually above.
-    const BULK_TLDS = ['com', 'net', 'org', 'cc', 'dev', 'app', 'ai', 'biz', 'info', 'xyz', 'finance', 'tech'];
-
-    function baseNameFromInput(raw) {
-      // Accept either a bare name ("mynewventure") or a full domain
-      // ("mynewventure.com") - strip a trailing known TLD from the latter
-      // so "Check all TLDs" checks the name, not just that one TLD again.
-      const parts = raw.split('.');
-      if (parts.length > 1 && tldMap[parts[parts.length - 1]]) {
-        return parts.slice(0, -1).join('.');
-      }
-      return raw;
-    }
-
-    async function checkOneBulkTld(name, tld) {
-      const rdapBase = tldMap[tld];
-      const domain = `${name}.${tld}`;
-      try {
-        const resp = await fetch(`${rdapBase}/domain/${domain}`);
-        if (resp.status === 404) {
-          return { domain, status: 'available' };
-        } else if (resp.ok) {
-          return { domain, status: 'taken' };
-        }
-        return { domain, status: 'unknown', detail: `HTTP ${resp.status}` };
-      } catch (e) {
-        return { domain, status: 'unknown', detail: e.message };
-      }
-    }
-
-    function bulkRowInnerHtml(r) {
-      let badge, extra = '';
-      if (r.status === 'available') {
-        badge = '<span class="badge badge-available">AVAILABLE</span>';
-        extra = `<a class="register-btn" target="_blank" rel="noopener"
-          href="https://www.dynadot.com/domain/search?domain=${encodeURIComponent(r.domain)}">Register &rarr;</a>`;
-      } else if (r.status === 'taken') {
-        badge = '<span class="badge badge-taken">TAKEN</span>';
-      } else {
-        badge = '<span class="badge badge-unknown">UNKNOWN</span>';
-      }
-      return `<span class="bulk-domain">${r.domain}</span>${badge}${extra}`;
-    }
-
-    async function checkAllTlds() {
-      const raw = document.getElementById('domainInput').value.trim().toLowerCase();
-      if (!raw) {
-        setResult('<div class="detail">Enter a name first, e.g. mynewventure</div>');
-        return;
-      }
-      const name = baseNameFromInput(raw);
-      const bulkEl = document.getElementById('bulkResults');
-      document.getElementById('bulkBtn').disabled = true;
-      bulkEl.innerHTML = BULK_TLDS.map(tld =>
-        `<div class="bulk-row" id="bulk-${tld}"><span class="bulk-domain">${name}.${tld}</span><span class="detail">checking...</span></div>`
-      ).join('');
-
-      await Promise.all(BULK_TLDS.map(async tld => {
-        const r = await checkOneBulkTld(name, tld);
-        const el = document.getElementById(`bulk-${tld}`);
-        if (el) el.innerHTML = bulkRowInnerHtml(r);
-      }));
-
-      document.getElementById('bulkBtn').disabled = false;
-    }
-
-    document.getElementById('bulkBtn').addEventListener('click', checkAllTlds);
-  </script>
+  <!--
+    This page used to be a second, independently-maintained copy of the
+    checker (single-domain + bulk-TLD RDAP lookup). It drifted out of sync
+    with index.html twice (2026-09-06, 2026-09-12) because a feature added
+    to one copy wasn't also added to the other - the same class of bug
+    recurring in a new file each time. index.html is the real homepage
+    every visitor and every inbound link actually hits, and it already
+    contains 100% of this page's functionality (single check + "check all
+    TLDs" bulk check), so this file now just forwards there instead of
+    being a second copy to keep in sync by hand.
+  -->
+  <p>Redirecting to the <a href="index.html">Domain Availability Checker</a>&hellip;</p>
 </body>
 </html>
