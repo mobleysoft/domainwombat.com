@@ -69,6 +69,18 @@
   .bulk-row .bulk-domain { flex: 1; font-weight: 600; }
   .bulk-row .register-btn { padding: 6px 12px; font-size: 13px; margin-top: 0; }
   #bulkBtn { background: transparent; color: var(--accent); border: 1px solid var(--glass-border); }
+  .watch-btn {
+    background: transparent; color: var(--text-muted); border: 1px solid var(--glass-border);
+    padding: 6px 12px; font-size: 13px; border-radius: 8px; cursor: pointer; margin-top: 0;
+  }
+  .watch-btn:hover { color: var(--accent); border-color: var(--accent); }
+  .unwatch-btn {
+    background: transparent; border: 1px solid var(--glass-border); color: var(--text-muted);
+    padding: 6px 10px; border-radius: 8px; font-size: 12px; cursor: pointer;
+  }
+  .unwatch-btn:hover { color: var(--danger); border-color: var(--danger); }
+  .section-heading { margin-top: 36px; margin-bottom: 4px; font-weight: 600; }
+  .changed-note { color: var(--accent); font-weight: 600; font-size: 12px; }
 </style>
 </head>
 <body>
@@ -95,6 +107,17 @@
 
   <div class="result" id="result"></div>
   <div id="bulkResults"></div>
+
+  <h2 class="section-heading">Watchlist</h2>
+  <div class="subtitle">
+    Track a domain over time — including ones already taken, to catch the moment they lapse.
+    Stored only in this browser (localStorage), never sent anywhere.
+  </div>
+  <div id="watchlistEmpty" class="detail" style="margin-bottom:12px;">
+    Nothing watched yet — check a domain above, then click "Watch" on the result to track it here.
+  </div>
+  <button id="recheckBtn" style="display:none;margin-bottom:12px;">Recheck watchlist</button>
+  <div id="watchlistResults"></div>
 
   <div class="footnote">
     Coverage note: RDAP is deployed by most registries but not all. As of this build,
@@ -178,7 +201,9 @@
             <a class="register-btn" target="_blank" rel="noopener"
                href="${dynadotRegisterUrl(raw)}">
                Register ${raw} at Dynadot &rarr;</a>
+            <button class="watch-btn" id="watchBtn" style="margin-left:8px;">&#9734; Watch</button>
           `);
+          wireWatchButton(raw, 'available');
         } else if (resp.ok) {
           const data = await resp.json();
           const events = data.events || [];
@@ -190,6 +215,7 @@
             Handle: ${data.handle || 'n/a'}</div>
             <div class="detail" style="margin-top:12px;">Try the same name on another TLD instead
             of guessing - <a href="#" id="tryOtherTlds">check all TLDs</a> for "${baseNameFromInput(raw)}" below.</div>
+            <button class="watch-btn" id="watchBtn" style="margin-top:12px;">&#9734; Watch for when it lapses</button>
           `);
           const tryLink = document.getElementById('tryOtherTlds');
           if (tryLink) {
@@ -199,6 +225,7 @@
               checkAllTlds();
             });
           }
+          wireWatchButton(raw, 'taken');
         } else {
           setResult(`
             <div class="domain">${raw}</div>
@@ -265,9 +292,11 @@
       if (r.status === 'available') {
         badge = '<span class="badge badge-available">AVAILABLE</span>';
         extra = `<a class="register-btn" target="_blank" rel="noopener"
-          href="${dynadotRegisterUrl(r.domain)}">Register &rarr;</a>`;
+          href="${dynadotRegisterUrl(r.domain)}">Register &rarr;</a>
+          <button class="watch-btn watch-bulk-btn" data-domain="${r.domain}" data-status="available">&#9734;</button>`;
       } else if (r.status === 'taken') {
         badge = '<span class="badge badge-taken">TAKEN</span>';
+        extra = `<button class="watch-btn watch-bulk-btn" data-domain="${r.domain}" data-status="taken">&#9734;</button>`;
       } else {
         badge = '<span class="badge badge-unknown">UNKNOWN</span>';
       }
@@ -297,6 +326,118 @@
     }
 
     document.getElementById('bulkBtn').addEventListener('click', checkAllTlds);
+
+    // Watchlist: real "domain management" feature (not just one-shot checking)
+    // - tracks domains, including already-taken ones, across visits so a user
+    // can catch the moment a coveted name lapses. Client-side only
+    // (localStorage), no backend - matches this venture's own spec_draft
+    // roadmap ("expand to acquisition... portfolio tracking") without
+    // requiring a server this static site doesn't have.
+    const WATCHLIST_KEY = 'dw_watchlist_v1';
+
+    function loadWatchlist() {
+      try { return JSON.parse(localStorage.getItem(WATCHLIST_KEY)) || []; }
+      catch (e) { return []; }
+    }
+    function saveWatchlist(list) {
+      localStorage.setItem(WATCHLIST_KEY, JSON.stringify(list));
+    }
+    function addToWatchlist(domain, status) {
+      const list = loadWatchlist();
+      const existing = list.find(w => w.domain === domain);
+      const now = new Date().toISOString();
+      if (existing) {
+        existing.status = status; existing.lastChecked = now; existing.changed = false;
+      } else {
+        list.push({ domain, status, lastChecked: now, changed: false });
+      }
+      saveWatchlist(list);
+      renderWatchlist();
+    }
+    function removeFromWatchlist(domain) {
+      saveWatchlist(loadWatchlist().filter(w => w.domain !== domain));
+      renderWatchlist();
+    }
+    function wireWatchButton(domain, status) {
+      const btn = document.getElementById('watchBtn');
+      if (btn) btn.addEventListener('click', () => addToWatchlist(domain, status));
+    }
+
+    async function rdapCheckDomain(domain) {
+      const tld = domain.split('.').pop();
+      const rdapBase = tldMap[tld];
+      if (!rdapBase) return 'unknown';
+      try {
+        const resp = await fetch(`${rdapBase}/domain/${domain}`);
+        if (resp.status === 404) return 'available';
+        if (resp.ok) return 'taken';
+        return 'unknown';
+      } catch (e) {
+        return 'unknown';
+      }
+    }
+
+    async function recheckWatchlist() {
+      const list = loadWatchlist();
+      if (!list.length) return;
+      const btn = document.getElementById('recheckBtn');
+      btn.disabled = true;
+      btn.textContent = 'Rechecking...';
+      await Promise.all(list.map(async w => {
+        const status = await rdapCheckDomain(w.domain);
+        w.changed = (status !== 'unknown' && status !== w.status);
+        if (status !== 'unknown') w.status = status;
+        w.lastChecked = new Date().toISOString();
+      }));
+      saveWatchlist(list);
+      renderWatchlist();
+      btn.disabled = false;
+      btn.textContent = 'Recheck watchlist';
+    }
+
+    function watchlistRowHtml(w) {
+      const badgeClass = w.status === 'available' ? 'badge-available'
+        : w.status === 'taken' ? 'badge-taken' : 'badge-unknown';
+      const registerLink = w.status === 'available'
+        ? `<a class="register-btn" target="_blank" rel="noopener" href="${dynadotRegisterUrl(w.domain)}">Register &rarr;</a>`
+        : '';
+      const changedNote = w.changed ? '<span class="changed-note">&#8645; changed</span>' : '';
+      const when = new Date(w.lastChecked).toLocaleString();
+      return `<div class="bulk-row">
+        <span class="bulk-domain">${w.domain}</span>
+        <span class="badge ${badgeClass}">${w.status.toUpperCase()}</span>
+        ${changedNote}
+        <span class="detail" style="margin:0;">checked ${when}</span>
+        ${registerLink}
+        <button class="unwatch-btn" data-domain="${w.domain}" title="Stop watching">&times;</button>
+      </div>`;
+    }
+
+    function renderWatchlist() {
+      const list = loadWatchlist();
+      const results = document.getElementById('watchlistResults');
+      const empty = document.getElementById('watchlistEmpty');
+      const recheckBtn = document.getElementById('recheckBtn');
+      if (!list.length) {
+        results.innerHTML = '';
+        empty.style.display = 'block';
+        recheckBtn.style.display = 'none';
+        return;
+      }
+      empty.style.display = 'none';
+      recheckBtn.style.display = 'inline-block';
+      results.innerHTML = list.map(watchlistRowHtml).join('');
+      results.querySelectorAll('.unwatch-btn').forEach(b => {
+        b.addEventListener('click', () => removeFromWatchlist(b.dataset.domain));
+      });
+    }
+
+    document.getElementById('recheckBtn').addEventListener('click', recheckWatchlist);
+    document.getElementById('bulkResults').addEventListener('click', (e) => {
+      const btn = e.target.closest('.watch-bulk-btn');
+      if (btn) addToWatchlist(btn.dataset.domain, btn.dataset.status);
+    });
+    renderWatchlist();
   </script>
 </body>
 </html>
