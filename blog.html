@@ -3,30 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Real, practical notes on domain availability checking, RDAP vs. WHOIS, and domain front-running - from the people who built the checker.">
     <title>DOMAINWOMBAT.COM | INSIGHTS</title>
     <style>
         body {
-            margin: 0; padding: 40px; background-color: #050505; color: #f0f0f0;
-            font-family: -apple-system, sans-serif; line-height: 1.6;
+            margin: 0; padding: 40px 24px; background-color: #050505; color: #f0f0f0;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6; max-width: 800px; margin-left: auto; margin-right: auto;
         }
-        h1 { color: #00ffcc; letter-spacing: -0.05em; font-size: 2.5rem; }
+        nav { display: flex; justify-content: flex-end; margin-bottom: 12px; }
+        nav a { color: #888; text-decoration: none; font-size: 13px; border: 1px solid rgba(255,255,255,0.08); padding: 6px 12px; border-radius: 8px; }
+        nav a:hover { color: #00ffcc; border-color: #00ffcc; }
+        h1 { color: #00ffcc; letter-spacing: -0.03em; font-size: 2.2rem; margin-bottom: 4px; }
+        .subtitle { color: #888; font-size: 14px; margin-bottom: 32px; }
         .article {
-            max-width: 800px; margin: 40px 0; padding: 30px;
-            background: rgba(20,20,20,0.6); border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 12px; backdrop-filter: blur(10px);
+            max-width: 800px; margin: 0 0 24px; padding: 26px 30px;
+            background: rgba(20,20,20,0.6); border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
         }
-        h2 { font-size: 1.5rem; margin-top: 0; color: #fff; }
-        .meta { font-size: 0.8rem; color: #888; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 20px; }
+        h2 { font-size: 1.4rem; margin-top: 0; color: #fff; }
+        .meta { font-size: 0.75rem; color: #888; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+        p { color: #ccc; font-size: 14.5px; }
+        code { background: rgba(255,255,255,0.06); padding: 1px 6px; border-radius: 4px; font-size: 13px; }
+        a { color: #00ffcc; }
     </style>
 </head>
 <body>
-    <h1>DOMAINWOMBAT.COM // INTELLIGENCE CORTEX</h1>
-    
+    <nav><a href="index.html">&larr; Domain Checker</a></nav>
+    <h1>Insights</h1>
+    <div class="subtitle">Notes on domain availability, written to be checkable, not to sound impressive.</div>
+
     <div class="article">
-        <h2>The Physical Manifestation of Premium, enigmatic, hyper-modern Architecture</h2>
-        <div class="meta">SYSTEM GENERATED // AUTOPOIESIS PHASE 4</div>
-        <p>The biological bottleneck has been eradicated. The execution of Sovereign architecture requires zero rented API calls. We own the metal. We own the physics.</p>
-        <p>This is a mathematically verified truth standard injected by the Fecundity Loom.</p>
+        <h2>RDAP vs. WHOIS: why this tool doesn't use a WHOIS lookup</h2>
+        <div class="meta">Domain infrastructure</div>
+        <p>WHOIS has been the standard domain-lookup protocol since the 1980s, but it was never
+        formally specified - every registry's output format is slightly different, there's no
+        standard way to ask "is this available" versus "who owns this," and rate limits vary
+        registry to registry with no consistent error format. RDAP (Registration Data Access
+        Protocol, <a href="https://www.rfc-editor.org/rfc/rfc7482" target="_blank" rel="noopener">RFC 7482</a>)
+        is IANA's replacement: a real HTTP/JSON API, one predictable response shape, and a
+        published <a href="https://data.iana.org/rdap/dns.json" target="_blank" rel="noopener">bootstrap
+        registry</a> mapping every TLD to its authoritative RDAP server. This checker queries that
+        server directly - a 404 means no registration record exists (likely available), a 200
+        means one does (taken), which is exactly what the <a href="index.html">checker</a> on this
+        site does live, not a simulated result.</p>
+    </div>
+
+    <div class="article">
+        <h2>Domain front-running: why a registrar's own search box can work against you</h2>
+        <div class="meta">Buyer protection</div>
+        <p>"Domain front-running" (sometimes called domain tasting or search-box sniping) is a
+        documented pattern where searching an available name through a registrar's own interface
+        can itself register interest in that name before you complete a purchase - the search
+        becomes a signal the registrar's own systems (or a partner network) can act on faster than
+        you can check out. It's been reported and discussed publicly for years, most notably around
+        Network Solutions in the mid-2000s. The practical defense is simple: check availability
+        against the registry's own authoritative RDAP record instead of a registrar's search
+        interface, and register through a direct handoff once you've confirmed - the same reasoning
+        behind why the <a href="index.html">checker</a> registers you through
+        <a href="https://www.dynadot.com" target="_blank" rel="noopener">Dynadot's own checkout</a>
+        rather than an in-page purchase flow.</p>
+    </div>
+
+    <div class="article">
+        <h2>Coverage gaps: not every TLD has RDAP yet</h2>
+        <div class="meta">Known limitations</div>
+        <p>RDAP adoption isn't universal. Some ccTLD registries (notably <code>.io</code> and
+        <code>.me</code> as of this writing) aren't in the IANA bootstrap registry yet, and some
+        registries that do support RDAP block direct browser queries via CORS. When that happens,
+        this tool says so plainly rather than falling back to a scraped or estimated result - see
+        the coverage note on the <a href="index.html">checker</a> itself for the current supported
+        list.</p>
     </div>
 </body>
 </html>
