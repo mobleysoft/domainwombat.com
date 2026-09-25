@@ -120,16 +120,16 @@
   <div id="watchlistResults"></div>
 
   <div class="footnote">
-    Coverage note: RDAP is deployed by most registries but not all. As of this build,
-    <code>.com</code>, <code>.cc</code>, and <code>.finance</code> are supported directly;
-    <code>.io</code> and <code>.me</code> are not yet in the IANA RDAP bootstrap registry
-    and will report "not available" rather than a guess. Full TLD map:
-    <a href="rdap_tld_map.json">rdap_tld_map.json</a> (source:
-    <a href="https://data.iana.org/rdap/dns.json">IANA RDAP bootstrap</a>).
-    "Check all TLDs" runs the same real per-registry query against a shortlist of
-    12 common commercial TLDs (com/net/org/cc/dev/app/ai/biz/info/xyz/finance/tech) -
-    not the full 1200-TLD map, since most of those registries either aren't
-    relevant to a new venture name or block direct browser RDAP queries entirely.
+    Coverage note: the single check above queries any of the 1,200 TLDs in the
+    <a href="rdap_tld_map.json">IANA RDAP bootstrap map</a> directly - not just a
+    handful. <code>.io</code> and <code>.me</code> aren't in that bootstrap registry
+    yet and will report "not available" rather than a guess; a small number of other
+    registries block direct browser RDAP queries (CORS) and will report "check failed."
+    "Check all TLDs" runs the same real per-registry query against a curated shortlist
+    of 12 common commercial TLDs - <code>com/net/org/cc/dev/app/ai/biz/info/xyz/finance/tech</code> -
+    live re-verified working (real RDAP response + working CORS) on 2026-09-24, not
+    the full 1,200-TLD map, since most of those registries either aren't relevant to a
+    new venture name or block direct browser RDAP queries entirely.
   </div>
 
   <script>
@@ -252,7 +252,7 @@
     // Bulk multi-TLD check: real value-add beyond single-domain lookup -
     // take a base name and check it across a curated shortlist of common
     // commercial TLDs that are both in the real IANA RDAP bootstrap map
-    // AND known (live-verified 2026-09-11) to respond to direct browser
+    // AND known (live-verified 2026-09-11, re-verified 2026-09-24) to respond to direct browser
     // RDAP queries. Not all 1200 TLDs in rdap_tld_map.json are included -
     // most either aren't relevant for a new venture name or don't allow
     // direct browser RDAP queries (CORS), which would just flood this
